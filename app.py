@@ -3,21 +3,21 @@ from src.helpers import download_embeddings
 from dotenv import load_dotenv
 import os
 from langchain_pinecone import PineconeVectorStore
-from langchain.chains import create_retrieval_chain
-from langchain.chains.combine_documents import create_stuff_documents_chain
+from langchain_classic.chains import create_retrieval_chain
+from langchain_classic.chains.combine_documents import create_stuff_documents_chain
 from langchain_core.prompts import ChatPromptTemplate
 from dotenv import load_dotenv
 from src.prompt import *
-from langchain_openai import ChatOpenAI
+from langchain_google_genai import ChatGoogleGenerativeAI
 
 app = Flask(__name__)
 
 load_dotenv()
 
 PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-os.environ[PINECONE_API_KEY] = PINECONE_API_KEY
-os.environ[OPENAI_API_KEY] = OPENAI_API_KEY
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+os.environ["PINECONE_API_KEY"] = PINECONE_API_KEY
+os.environ["GEMINI_API_KEY"] = GEMINI_API_KEY
 
 embeddings = download_embeddings()
 index_name = "medical-chatbot"
@@ -28,7 +28,7 @@ docsearch = PineconeVectorStore.from_existing_index(
 
 
 retriever = docsearch.as_retriever(search_type = "similarity", search_kwargs ={"k":3})
-chatModel = ChatOpenAI(model = "gpt-4o")
+chatModel = ChatGoogleGenerativeAI(model = "gemini-3.7-flash", google_api_key=GEMINI_API_KEY)
 prompt = ChatPromptTemplate.from_messages(
     [
         ("system",system_prompt),

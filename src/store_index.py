@@ -9,9 +9,9 @@ from langchain_pinecone import PineconeVectorStore
 load_dotenv()
 
 PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-os.environ[PINECONE_API_KEY] = PINECONE_API_KEY
-os.environ[OPENAI_API_KEY] = OPENAI_API_KEY
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+os.environ["PINECONE_API_KEY"] = PINECONE_API_KEY
+os.environ["GEMINI_API_KEY"] = GEMINI_API_KEY
 
 extracted_data = load_pdf_files(data = 'data/')
 filter_data = filter_to_minimal_doc(extracted_data)
