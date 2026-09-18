@@ -3,7 +3,7 @@ from langchain_community.document_loaders import PyPDFLoader, DirectoryLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from typing import List
 from langchain_core.documents import Document
-from langchain_community.embeddings import HuggingFaceBgeEmbeddings
+from langchain_community.embeddings import HuggingFaceEmbeddings
 
 #filter required data
 def filter_to_minimal_doc(docs : List[Document]) -> List[Document]:
@@ -45,7 +45,7 @@ def text_spilt(minimal_doc):
 
 def download_embeddings():
     model_name = "sentence-transformers/all-MiniLM-L6-v2"
-    embeddings = HuggingFaceBgeEmbeddings(
+    embeddings = HuggingFaceEmbeddings(
         model_name = model_name
     )
     return embeddings
